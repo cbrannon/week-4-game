@@ -44,6 +44,7 @@ $(document).ready(function() {
     function Game() {
         this.characters = ["obiWan", "darthMaul", "jarJar", "maceWindu", "anakin", "yoda"];
         this.player;
+        this.baseAttack;
         this.enemies = [];
         this.defender = "";
         this.defeated = 0;
@@ -53,29 +54,26 @@ $(document).ready(function() {
                 switch (character) {
                     case "obiWan":
                         this.player = new ObiWan();
-                        this.setEnemies();
                         break;
                     case "darthMaul":
                         this.player = new DarthMaul();
-                        this.setEnemies();
                         break;
                     case "jarJar":
                         this.player = new JarJar();
-                        this.setEnemies();
                         break;
                     case "maceWindu":
                         this.player = new MaceWindu();
-                        this.setEnemies();
                         break;
                     case "anakin":
                         this.player = new Anakin();
-                        this.setEnemies();
                         break;
                     case "yoda":
                         this.player = new Yoda();
-                        this.setEnemies();
                         break;
                 }
+
+                this.baseAttack = this.player.attackPower;
+                this.setEnemies();
                 console.log(this.player);
                 $("#" + character).css("border-color", "#2FF923");
             }
@@ -146,7 +144,7 @@ $(document).ready(function() {
             $("#fight-text").prepend("Player does " + this.player.attackPower + " damage.<br>");
 
 
-            this.player.attackPower += this.player.attackPower;
+            this.player.attackPower += this.baseAttack;
 
             console.group("Fight stats");
             console.log("Players HP: " + this.player.healthPoints);
