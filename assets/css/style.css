@@ -1,0 +1,85 @@
+/*********** Sizing and Formatting ***********/
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100%;
+  background: url("../images/death-star.jpg") 50% 0 fixed no-repeat;
+  background-size: cover;
+}
+
+.characters {
+  height: 100px;
+  width: 100px;
+  display: inline-block;
+  border-radius: 10px;
+  border: 2px solid #f6ef47;
+  position: relative;
+  margin: 0 5px;
+}
+
+div .label {
+  padding: 0;
+  position: absolute;
+  width: 96.8px;
+}
+
+.name-label {
+  margin-top: 5px;
+}
+
+.health-label {
+  margin-top: 80px;
+}
+
+.defeated {
+  display: none;
+}
+
+/*********** Colors ***********/
+.header, .label, .sub-head, #fight-text {
+  color: #f6ef47;
+}
+
+#attack-button {
+  background: none;
+  border: 2px solid #f6ef47;
+  color: #f6ef47;
+}
+
+/*********** Text ***********/
+
+
+
+
+/*********** Images ***********/
+#obiWan {
+  background: url("../images/Obi-wan.jpg");
+  background-size: cover;
+}
+
+#darthMaul {
+  background: url("../images/Darth-maul.jpg");
+  background-size: cover;
+}
+
+#jarJar {
+  background: url("../images/Jar-jar.jpg");
+  background-size: cover;
+}
+
+#maceWindu {
+  background: url("../images/Mace-windu.jpg");
+  background-size: cover;
+}
+
+#anakin {
+  background: url("../images/Anakin.jpg");
+  background-size: cover;
+}
+
+#yoda {
+  background: url("../images/Yoda.jpg");
+  background-size: cover;
+}

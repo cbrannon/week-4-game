@@ -6,10 +6,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Star Wars Game</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+    <script src="assets/javascript/game.js"></script>
+
 </head>
-
 <body>
-
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12">
+        <h1 class="header">Star Wars RPG</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-8 your-character">
+        <h2 class="sub-head">Your Character</h2>
+        <div class="characters" id="obiWan">
+          <div class="label name-label text-center">Obi-Wan Kenobi</div>
+          <div class="label health-label text-center">Health: <span id="obiWan-health">120</span></div>
+        </div>
+        <div class="characters" id="darthMaul">
+          <div class="label name-label text-center">Darth Maul</div>
+          <div class="label health-label text-center">Health: <span id="darthMaul-health">160</span></div>
+        </div>
+        <div class="characters" id="jarJar">
+          <div class="label name-label text-center">Jar Jar Binks</div>
+          <div class="label health-label text-center">Health: <span id="jarJar-health">200</span></div>
+        </div>
+        <div class="characters" id="maceWindu">
+          <div class="label name-label text-center">Mace Windu</div>
+          <div class="label health-label text-center">Health: <span id="maceWindu-health">180</span></div>
+        </div>
+        <div class="characters" id="anakin">
+          <div class="label name-label text-center">Anakin Skywalker</div>
+          <div class="label health-label text-center">Health: <span id="anakin-health">80</span></div>
+        </div>
+        <div class="characters" id="yoda">
+          <div class="label name-label text-center">Yoda</div>
+          <div class="label health-label text-center">Health: <span id="yoda-health">100</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-8 enemies">
+        <h2 class="sub-head">Enemies Available to Attack</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-8 fight-section">
+        <h2 class="sub-head">Fight Section</h2>
+        <button type="button" class="btn btn-default" id="attack-button">Attack!</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h2 class="sub-head">Defender</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 defender">
+      </div>
+      <div class="col-xs-6">
+        <p id="fight-text"></p>
+      </div>
+    </div>
+    <div class="row defeated">
+    </div>
+  </div>
 </body>
-
 </html>
