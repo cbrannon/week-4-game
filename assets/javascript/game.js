@@ -55,6 +55,7 @@ $(document).ready(function() {
         this.defender = "";
         this.defeated = 0;
 
+        // Set player character.
         this.setCharacter = function(character) {
             if (this.player == undefined) {
                 switch (character) {
@@ -85,6 +86,7 @@ $(document).ready(function() {
             }
         }
 
+        // Set enemy characters.
         this.setEnemies = function() {
             for (var i = 0; i < this.characters.length; i++) {
 
@@ -127,6 +129,7 @@ $(document).ready(function() {
             console.log(this.enemies);
         }
 
+        // Set defender character.
         this.setDefender = function(character) {
             if (character !== this.player.id && this.defender == "") {
                 for (var enemyIndex = 0; enemyIndex < this.enemies.length; enemyIndex++) {
@@ -141,6 +144,7 @@ $(document).ready(function() {
             }
         }
 
+        // Fight action.
         this.fight = function() {
             this.defender.healthPoints -= this.player.attackPower;
             this.player.healthPoints -= this.defender.counterAttackPower;
@@ -182,7 +186,7 @@ $(document).ready(function() {
             }
         }
 
-
+        // Play that sound.
         this.playSound = function() {
             switch (this.defender.id) {
                 case "obiWan":
@@ -205,6 +209,7 @@ $(document).ready(function() {
                     break;
             }
         }
+
         // Reset board for next game.
         this.reset = function() {
             newGame = new Game();
