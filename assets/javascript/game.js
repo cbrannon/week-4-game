@@ -1,41 +1,47 @@
 $(document).ready(function() {
     function ObiWan() {
-        this.name = "obiWan";
+        this.name = "Obi-Wan Kenobi";
+        this.id = "obiWan";
         this.healthPoints = 120;
         this.attackPower = 16;
         this.counterAttackPower = 20;
     }
 
     function DarthMaul() {
-        this.name = "darthMaul";
+        this.name = "Darth Maul";
+        this.id = "darthMaul";
         this.healthPoints = 160;
         this.attackPower = 12;
         this.counterAttackPower = 35;
     }
 
     function JarJar() {
-        this.name = "jarJar";
+        this.name = "Jar Jar Binks";
+        this.id = "jarJar";
         this.healthPoints = 200;
         this.attackPower = 5;
         this.counterAttackPower = 5;
     }
 
     function MaceWindu() {
-        this.name = "maceWindu";
+        this.name = "Mace Windu";
+        this.id = "maceWindu";
         this.healthPoints = 180;
         this.attackPower = 18;
         this.counterAttackPower = 10;
     }
 
     function Anakin() {
-        this.name = "anakin";
+        this.name = "Anakin Skywalker";
+        this.id = "anakin";
         this.healthPoints = 80;
         this.attackPower = 20;
         this.counterAttackPower = 25;
     }
 
     function Yoda() {
-        this.name = "yoda";
+        this.name = "Yoda";
+        this.id = "yoda";
         this.healthPoints = 100;
         this.attackPower = 20;
         this.counterAttackPower = 30;
@@ -82,7 +88,7 @@ $(document).ready(function() {
         this.setEnemies = function() {
             for (var i = 0; i < this.characters.length; i++) {
 
-                if (this.characters[i] !== this.player.name) {
+                if (this.characters[i] !== this.player.id) {
 
                     switch (this.characters[i]) {
                         case "obiWan":
@@ -115,16 +121,16 @@ $(document).ready(function() {
 
             // Set border style of enemies and move to enemy location.
             for (var enemyIndex = 0; enemyIndex < this.enemies.length; enemyIndex++) {
-                $("#" + this.enemies[enemyIndex].name).css("border-color", "#FF0000");
-                $("#" + this.enemies[enemyIndex].name).detach().appendTo(".enemies");
+                $("#" + this.enemies[enemyIndex].id).css("border-color", "#FF0000");
+                $("#" + this.enemies[enemyIndex].id).detach().appendTo(".enemies");
             }
             console.log(this.enemies);
         }
 
         this.setDefender = function(character) {
-            if (character !== this.player.name && this.defender == "") {
+            if (character !== this.player.id && this.defender == "") {
                 for (var enemyIndex = 0; enemyIndex < this.enemies.length; enemyIndex++) {
-                    if (character == this.enemies[enemyIndex].name) {
+                    if (character == this.enemies[enemyIndex].id) {
                         this.defender = this.enemies[enemyIndex];
                         $("#" + character).detach().appendTo(".defender");
                         $("#" + character).css("border-color", "#2719C7");
@@ -138,13 +144,14 @@ $(document).ready(function() {
         this.fight = function() {
             this.defender.healthPoints -= this.player.attackPower;
             this.player.healthPoints -= this.defender.counterAttackPower;
-            $("#" + this.player.name + "-health").html(this.player.healthPoints);
-            $("#" + this.defender.name + "-health").html(this.defender.healthPoints);
-            $("#fight-text").prepend("Player takes " + this.defender.counterAttackPower + " damage.<br>");
-            $("#fight-text").prepend("Player does " + this.player.attackPower + " damage.<br>");
+            $("#" + this.player.id + "-health").html(this.player.healthPoints);
+            $("#" + this.defender.id + "-health").html(this.defender.healthPoints);
+            $("#fight-text").prepend("You take " + this.defender.counterAttackPower + " damage.<br>");
+            $("#fight-text").prepend(this.defender.name + " takes " + this.player.attackPower + " damage.<br>");
 
 
             this.player.attackPower += this.baseAttack;
+            this.playSound();
 
             console.group("Fight stats");
             console.log("Players HP: " + this.player.healthPoints);
@@ -152,23 +159,53 @@ $(document).ready(function() {
             console.log("Players new attack power: " + this.player.attackPower);
             console.groupEnd();
 
+            // Defeat current defender.
             if (this.defender.healthPoints <= 0) {
-                $("#" + this.defender.name).detach().appendTo(".defeated");
+                $("#" + this.defender.id).detach().appendTo(".defeated");
+                $("#fight-text").html(this.defender.name + " was defeated!");
                 this.defender = "";
                 this.defeated += 1;
             }
 
+            // Win condition based on number of enemies available.
             if (this.defeated == 5) {
+                $("#fight-text").html("You win!");
                 console.log("You win!");
                 this.reset();
             }
 
+            // Lose condition.
             if (this.player.healthPoints <= 0) {
+                $("#fight-text").html("You lose!");
                 console.log("You lose!");
                 this.reset();
             }
         }
 
+
+        this.playSound = function() {
+            switch (this.defender.id) {
+                case "obiWan":
+                    $("#audio").attr("src", "assets/audio/clash1.wav");
+                    break;
+                case "darthMaul":
+                    $("#audio").attr("src", "assets/audio/clash2.wav");
+                    break;
+                case "jarJar":
+                    $("#audio").attr("src", "assets/audio/jar-jar.mp3");
+                    break;
+                case "maceWindu":
+                    $("#audio").attr("src", "assets/audio/clash3.wav");
+                    break;
+                case "anakin":
+                    $("#audio").attr("src", "assets/audio/clash4.wav");
+                    break;
+                case "yoda":
+                    $("#audio").attr("src", "assets/audio/clash5.wav");
+                    break;
+            }
+        }
+        // Reset board for next game.
         this.reset = function() {
             newGame = new Game();
             this.player;
@@ -220,6 +257,10 @@ $(document).ready(function() {
     $("#attack-button").on("click", function() {
         if (newGame.player !== undefined && newGame.defender !== "") {
             newGame.fight();
+        } else if (newGame.player === undefined) {
+            $("#fight-text").html("Choose a player.");
+        } else {
+            $("#fight-text").html("No enemy selected for attack.");
         }
     });
 });
