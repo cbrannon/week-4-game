@@ -1,52 +1,4 @@
 $(document).ready(function() {
-    function ObiWan() {
-        this.name = "Obi-Wan Kenobi";
-        this.id = "obiWan";
-        this.healthPoints = 120;
-        this.attackPower = 16;
-        this.counterAttackPower = 20;
-    }
-
-    function DarthMaul() {
-        this.name = "Darth Maul";
-        this.id = "darthMaul";
-        this.healthPoints = 160;
-        this.attackPower = 12;
-        this.counterAttackPower = 35;
-    }
-
-    function JarJar() {
-        this.name = "Jar Jar Binks";
-        this.id = "jarJar";
-        this.healthPoints = 200;
-        this.attackPower = 5;
-        this.counterAttackPower = 5;
-    }
-
-    function MaceWindu() {
-        this.name = "Mace Windu";
-        this.id = "maceWindu";
-        this.healthPoints = 180;
-        this.attackPower = 18;
-        this.counterAttackPower = 10;
-    }
-
-    function Anakin() {
-        this.name = "Anakin Skywalker";
-        this.id = "anakin";
-        this.healthPoints = 80;
-        this.attackPower = 20;
-        this.counterAttackPower = 25;
-    }
-
-    function Yoda() {
-        this.name = "Yoda";
-        this.id = "yoda";
-        this.healthPoints = 100;
-        this.attackPower = 20;
-        this.counterAttackPower = 30;
-    }
-
     function Game() {
         this.characters = ["obiWan", "darthMaul", "jarJar", "maceWindu", "anakin", "yoda"];
         this.player;
@@ -54,6 +6,54 @@ $(document).ready(function() {
         this.enemies = [];
         this.defender = "";
         this.defeated = 0;
+
+        function ObiWan() {
+            this.name = "Obi-Wan Kenobi";
+            this.id = "obiWan";
+            this.healthPoints = 120;
+            this.attackPower = 16;
+            this.counterAttackPower = 20;
+        }
+
+        function DarthMaul() {
+            this.name = "Darth Maul";
+            this.id = "darthMaul";
+            this.healthPoints = 160;
+            this.attackPower = 12;
+            this.counterAttackPower = 35;
+        }
+
+        function JarJar() {
+            this.name = "Jar Jar Binks";
+            this.id = "jarJar";
+            this.healthPoints = 150;
+            this.attackPower = 5;
+            this.counterAttackPower = 5;
+        }
+
+        function MaceWindu() {
+            this.name = "Mace Windu";
+            this.id = "maceWindu";
+            this.healthPoints = 180;
+            this.attackPower = 18;
+            this.counterAttackPower = 10;
+        }
+
+        function Anakin() {
+            this.name = "Anakin Skywalker";
+            this.id = "anakin";
+            this.healthPoints = 80;
+            this.attackPower = 20;
+            this.counterAttackPower = 25;
+        }
+
+        function Yoda() {
+            this.name = "Yoda";
+            this.id = "yoda";
+            this.healthPoints = 100;
+            this.attackPower = 20;
+            this.counterAttackPower = 30;
+        }
 
         // Set player character.
         this.setCharacter = function(character) {
@@ -83,6 +83,7 @@ $(document).ready(function() {
                 this.setEnemies();
                 console.log(this.player);
                 $("#" + character).css("border-color", "#2FF923");
+                $("#fight-text").html("");
             }
         }
 
