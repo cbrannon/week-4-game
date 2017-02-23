@@ -158,38 +158,40 @@ $(document).ready(function() {
 
         // Update html after fight.
         this.updateHtml = function() {
-          $("#" + this.player.id + "-health").html(this.player.healthPoints);
-          $("#" + this.defender.id + "-health").html(this.defender.healthPoints);
-          $("#fight-text").html("You take " + this.defender.counterAttackPower + " damage.<br>");
-          $("#fight-text").prepend(this.defender.name + " takes " + this.player.attackPower + " damage.<br>");
+            $("#" + this.player.id + "-health").html(this.player.healthPoints);
+            $("#" + this.defender.id + "-health").html(this.defender.healthPoints);
+            $("#fight-text").html("You take " + this.defender.counterAttackPower + " damage.<br>");
+            $("#fight-text").prepend(this.defender.name + " takes " + this.player.attackPower + " damage.<br>");
         }
 
         // Check if defender has been defeated or if game is over.
         this.checkWin = function() {
-          // Defeat current defender.
-          if (this.defender.healthPoints <= 0) {
-              $("#" + this.defender.id).detach().appendTo(".defeated");
-              $("#fight-text").html(this.defender.name + " was defeated!");
-              this.defender = "";
-              this.defeated += 1;
-          }
+            // Defeat current defender.
+            if (this.defender.healthPoints <= 0) {
+                $("#" + this.defender.id).detach().appendTo(".defeated");
+                $("#fight-text").html(this.defender.name + " was defeated!");
+                this.defender = "";
+                this.defeated += 1;
+            }
 
-          // Win condition based on number of enemies available.
-          if (this.defeated == 5) {
-              $("#fight-text").html("All enemies defeated. You win!");
-              this.setGameOver();
-          }
+            // Lose condition.
+            if (this.player.healthPoints <= 0) {
+                $("#fight-text").html("You have been defeated. You lose!");
+                this.setGameOver();
+            }
 
-          // Lose condition.
-          if (this.player.healthPoints <= 0) {
-              $("#fight-text").html("You have been defeated. You lose!");
-              this.setGameOver();
-          }
+            // Win condition based on number of enemies available.
+            else if (this.defeated == 5) {
+                $("#fight-text").html("All enemies defeated. You win!");
+                this.setGameOver();
+            }
+
+
         }
 
         this.setGameOver = function() {
-          var restartButton = '<button type="button" class="btn btn-default" id="restart-button">Restart</button>'
-          $(".fightLocation").append(restartButton);
+            var restartButton = '<button type="button" class="btn btn-default" id="restart-button">Restart</button>'
+            $(".fightLocation").append(restartButton);
         }
 
         // Play that sound.
