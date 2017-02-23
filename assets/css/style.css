@@ -42,7 +42,7 @@ div .label {
   color: #f6ef47;
 }
 
-#attack-button {
+#attack-button, #restart-button {
   background: none;
   border: 2px solid #f6ef47;
   color: #f6ef47;

@@ -149,42 +149,47 @@ $(document).ready(function() {
         this.fight = function() {
             this.defender.healthPoints -= this.player.attackPower;
             this.player.healthPoints -= this.defender.counterAttackPower;
-            $("#" + this.player.id + "-health").html(this.player.healthPoints);
-            $("#" + this.defender.id + "-health").html(this.defender.healthPoints);
-            $("#fight-text").prepend("You take " + this.defender.counterAttackPower + " damage.<br>");
-            $("#fight-text").prepend(this.defender.name + " takes " + this.player.attackPower + " damage.<br>");
-
+            this.updateHtml();
 
             this.player.attackPower += this.baseAttack;
             this.playSound();
+            this.checkWin();
+        }
 
-            console.group("Fight stats");
-            console.log("Players HP: " + this.player.healthPoints);
-            console.log("Defenders HP: " + this.defender.healthPoints);
-            console.log("Players new attack power: " + this.player.attackPower);
-            console.groupEnd();
+        // Update html after fight.
+        this.updateHtml = function() {
+          $("#" + this.player.id + "-health").html(this.player.healthPoints);
+          $("#" + this.defender.id + "-health").html(this.defender.healthPoints);
+          $("#fight-text").html("You take " + this.defender.counterAttackPower + " damage.<br>");
+          $("#fight-text").prepend(this.defender.name + " takes " + this.player.attackPower + " damage.<br>");
+        }
 
-            // Defeat current defender.
-            if (this.defender.healthPoints <= 0) {
-                $("#" + this.defender.id).detach().appendTo(".defeated");
-                $("#fight-text").html(this.defender.name + " was defeated!");
-                this.defender = "";
-                this.defeated += 1;
-            }
+        // Check if defender has been defeated or if game is over.
+        this.checkWin = function() {
+          // Defeat current defender.
+          if (this.defender.healthPoints <= 0) {
+              $("#" + this.defender.id).detach().appendTo(".defeated");
+              $("#fight-text").html(this.defender.name + " was defeated!");
+              this.defender = "";
+              this.defeated += 1;
+          }
 
-            // Win condition based on number of enemies available.
-            if (this.defeated == 5) {
-                $("#fight-text").html("You win!");
-                console.log("You win!");
-                this.reset();
-            }
+          // Win condition based on number of enemies available.
+          if (this.defeated == 5) {
+              $("#fight-text").html("All enemies defeated. You win!");
+              this.setGameOver();
+          }
 
-            // Lose condition.
-            if (this.player.healthPoints <= 0) {
-                $("#fight-text").html("You lose!");
-                console.log("You lose!");
-                this.reset();
-            }
+          // Lose condition.
+          if (this.player.healthPoints <= 0) {
+              $("#fight-text").html("You have been defeated. You lose!");
+              this.setGameOver();
+          }
+        }
+
+        this.setGameOver = function() {
+          var restartButton = '<button type="button" class="btn btn-default" id="restart-button">Restart</button>'
+          $(".fightLocation").append(restartButton);
         }
 
         // Play that sound.
@@ -212,7 +217,7 @@ $(document).ready(function() {
         }
 
         // Reset board for next game.
-        this.reset = function() {
+        this.resetBoard = function() {
             newGame = new Game();
             this.player;
             this.enemies = [];
@@ -226,38 +231,16 @@ $(document).ready(function() {
             $("#maceWindu-health").html("180");
             $("#anakin-health").html("80");
             $("#yoda-health").html("100");
+            $("#fight-text").html("");
+            $("#restart-button").detach();
         }
     }
 
     var newGame = new Game();
 
     $(".characters").on("click", function() {
-        switch (this.id) {
-            case "obiWan":
-                newGame.setCharacter("obiWan");
-                newGame.setDefender("obiWan");
-                break;
-            case "darthMaul":
-                newGame.setCharacter("darthMaul");
-                newGame.setDefender("darthMaul");
-                break;
-            case "jarJar":
-                newGame.setCharacter("jarJar");
-                newGame.setDefender("jarJar");
-                break;
-            case "maceWindu":
-                newGame.setCharacter("maceWindu");
-                newGame.setDefender("maceWindu");
-                break;
-            case "anakin":
-                newGame.setCharacter("anakin");
-                newGame.setDefender("anakin");
-                break;
-            case "yoda":
-                newGame.setCharacter("yoda");
-                newGame.setDefender("yoda");
-                break;
-        }
+        newGame.setCharacter(this.id);
+        newGame.setDefender(this.id);
     });
 
     $("#attack-button").on("click", function() {
@@ -268,5 +251,11 @@ $(document).ready(function() {
         } else {
             $("#fight-text").html("No enemy selected for attack.");
         }
+    });
+
+    // Delegated event for dynamically added DOM element
+    $(".fightLocation").on("click", "#restart-button", function() {
+        newGame.resetBoard();
+        console.log("Reset");
     });
 });
