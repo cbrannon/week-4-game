@@ -6,28 +6,29 @@ $(document).ready(function() {
         this.enemies = [];
         this.defender = "";
         this.defeated = 0;
+        this.gameOver = false;
 
         function ObiWan() {
             this.name = "Obi-Wan Kenobi";
             this.id = "obiWan";
             this.healthPoints = 120;
-            this.attackPower = 16;
-            this.counterAttackPower = 20;
+            this.attackPower = 20;
+            this.counterAttackPower = 16;
         }
 
         function DarthMaul() {
             this.name = "Darth Maul";
             this.id = "darthMaul";
-            this.healthPoints = 160;
-            this.attackPower = 12;
-            this.counterAttackPower = 35;
+            this.healthPoints = 140;
+            this.attackPower = 16;
+            this.counterAttackPower = 22;
         }
 
         function JarJar() {
             this.name = "Jar Jar Binks";
             this.id = "jarJar";
             this.healthPoints = 150;
-            this.attackPower = 5;
+            this.attackPower = 18;
             this.counterAttackPower = 5;
         }
 
@@ -35,24 +36,24 @@ $(document).ready(function() {
             this.name = "Mace Windu";
             this.id = "maceWindu";
             this.healthPoints = 180;
-            this.attackPower = 18;
-            this.counterAttackPower = 10;
+            this.attackPower = 14;
+            this.counterAttackPower = 12;
         }
 
         function Anakin() {
             this.name = "Anakin Skywalker";
             this.id = "anakin";
             this.healthPoints = 80;
-            this.attackPower = 20;
-            this.counterAttackPower = 25;
+            this.attackPower = 100;
+            this.counterAttackPower = 14;
         }
 
         function Yoda() {
             this.name = "Yoda";
             this.id = "yoda";
             this.healthPoints = 100;
-            this.attackPower = 20;
-            this.counterAttackPower = 30;
+            this.attackPower = 24;
+            this.counterAttackPower = 20;
         }
 
         // Set player character.
@@ -176,12 +177,14 @@ $(document).ready(function() {
 
             // Lose condition.
             if (this.player.healthPoints <= 0) {
+                this.gameOver = true;
                 $("#fight-text").html("You have been defeated. You lose!");
                 this.setGameOver();
             }
 
             // Win condition based on number of enemies available.
             else if (this.defeated == 5) {
+                this.gameOver = true;
                 $("#fight-text").html("All enemies defeated. You win!");
                 this.setGameOver();
             }
@@ -225,11 +228,12 @@ $(document).ready(function() {
             this.enemies = [];
             this.defender = "";
             this.defeated = 0;
+            this.gameOver = false;
             $(".characters").detach().appendTo(".your-character");
             $(".characters").css("border-color", "#f6ef47");
             $("#obiWan-health").html("120");
-            $("#darthMaul-health").html("160");
-            $("#jarJar-health").html("200");
+            $("#darthMaul-health").html("140");
+            $("#jarJar-health").html("150");
             $("#maceWindu-health").html("180");
             $("#anakin-health").html("80");
             $("#yoda-health").html("100");
@@ -241,8 +245,11 @@ $(document).ready(function() {
     var newGame = new Game();
 
     $(".characters").on("click", function() {
-        newGame.setCharacter(this.id);
-        newGame.setDefender(this.id);
+        if (newGame.gameOver == false) {
+            newGame.setCharacter(this.id);
+            newGame.setDefender(this.id);
+
+        }
     });
 
     $("#attack-button").on("click", function() {
