@@ -248,7 +248,6 @@ $(document).ready(function() {
         if (newGame.gameOver == false) {
             newGame.setCharacter(this.id);
             newGame.setDefender(this.id);
-
         }
     });
 
